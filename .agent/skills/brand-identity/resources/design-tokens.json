@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "brand_name": "Fast-Router",
+    "description": "Core design tokens for Fast-Router UI implementation."
+  },
+  "colors": {
+    "primary": {
+      "DEFAULT": "#2563EB",
+      "hover": "#1D4ED8",
+      "light": "#3B82F6",
+      "glow": "rgba(37, 99, 235, 0.35)",
+      "foreground": "#FFFFFF"
+    },
+    "secondary": {
+      "DEFAULT": "#1E293B",
+      "hover": "#334155",
+      "foreground": "#F8FAFC"
+    },
+    "background": "#090D16",
+    "foreground": "#F8FAFC",
+    "surface": "#0F172A",
+    "surface_secondary": "#1E293B",
+    "surface_hover": "#1E293B",
+    "border": "#1E293B",
+    "border_subtle": "#1E293B80",
+    "muted": "#64748B",
+    "muted_foreground": "#94A3B8",
+    "accent": "#06B6D4",
+    "destructive": "#EF4444",
+    "success": "#10B981",
+    "warning": "#F59E0B"
+  },
+  "typography": {
+    "font_family_headings": ["Inter", "sans-serif"],
+    "font_family_body": ["Roboto", "Inter", "sans-serif"],
+    "font_family_mono": ["JetBrains Mono", "monospace"],
+    "font_weight_bold": "700",
+    "font_weight_medium": "500",
+    "font_weight_normal": "400"
+  },
+  "ui": {
+    "border_radius_default": "0.75rem",
+    "border_radius_card": "1rem",
+    "border_radius_small": "0.375rem",
+    "spacing_base_unit": "4px",
+    "glass_blur": "blur(16px)",
+    "shadow_card": "0 10px 30px -10px rgba(0, 0, 0, 0.5)",
+    "shadow_glow": "0 0 25px rgba(37, 99, 235, 0.25)"
+  }
+}
