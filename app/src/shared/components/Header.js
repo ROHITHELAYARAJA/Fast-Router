@@ -19,21 +19,6 @@ import FastRouterLogo from "@/shared/components/FastRouterLogo";
 const getPageInfo = (pathname) => {
   if (!pathname) return { title: "", description: "", breadcrumbs: [] };
 
-  if (pathname.includes("/chat"))
-    return {
-      title: "AI Chat",
-      description: "Conversational console powered by heavy-end production models",
-      icon: "chat",
-      breadcrumbs: [],
-    };
-  if (pathname.includes("/apps"))
-    return {
-      title: "AI App Builder",
-      description: "Build, configure, test & export production-ready AI applications",
-      icon: "apps",
-      breadcrumbs: [],
-    };
-
   // Provider detail page: /dashboard/providers/[id]
   const providerMatch = pathname.match(/\/providers\/([^/]+)$/);
   if (providerMatch) {
@@ -107,9 +92,9 @@ const getPageInfo = (pathname) => {
     };
   if (pathname === "/dashboard")
     return {
-      title: "AI Chat",
-      description: "Production reasoning chat",
-      icon: "chat",
+      title: "Endpoint & Keys",
+      description: "API endpoint configuration and gateway access keys",
+      icon: "api",
       breadcrumbs: [],
     };
   return { title: "", description: "", breadcrumbs: [] };

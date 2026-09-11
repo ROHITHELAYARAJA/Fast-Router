@@ -11,24 +11,6 @@ import Button from "./Button";
 import { ConfirmModal } from "./Modal";
 import FastRouterLogo from "./FastRouterLogo";
 
-// Primary Workspace navigation (Core products)
-const coreItems = [
-  {
-    href: "/dashboard/chat",
-    label: "AI Chat",
-    icon: "chat",
-    badge: "HEAVY",
-    description: "Production reasoning chat",
-  },
-  {
-    href: "/dashboard/apps",
-    label: "App Builder",
-    icon: "apps",
-    badge: "STUDIO",
-    description: "Build & export AI apps",
-  },
-];
-
 // Infrastructure & Gateway navigation
 const gatewayItems = [
   { href: "/dashboard/endpoint", label: "Endpoint & Key", icon: "api" },
@@ -66,10 +48,7 @@ export default function Sidebar({ onClose }) {
 
   const isActive = (href) => {
     if (href === "/dashboard/endpoint") {
-      return pathname === "/dashboard/endpoint";
-    }
-    if (href === "/dashboard/chat") {
-      return pathname === "/dashboard" || pathname.startsWith("/dashboard/chat");
+      return pathname === "/dashboard" || pathname.startsWith("/dashboard/endpoint");
     }
     return pathname.startsWith(href);
   };
@@ -146,58 +125,11 @@ export default function Sidebar({ onClose }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-3 space-y-5 overflow-y-auto custom-scrollbar">
-          {/* Section: Core Workspace */}
-          <div className="space-y-1">
-            <p className="px-3 text-[11px] font-mono font-bold text-sky-400 tracking-wider uppercase flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
-              <span>Workspace</span>
-            </p>
-            {coreItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className={cn(
-                  "flex items-center justify-between px-3 py-2 rounded-lg transition-all group border border-transparent",
-                  isActive(item.href)
-                    ? "bg-sky-500/10 text-white font-semibold shadow-[inset_0_0_12px_rgba(56,189,248,0.15)] border-sky-500/30 border-l-2 border-l-sky-400"
-                    : "text-text-muted hover:bg-surface-2 hover:text-white"
-                )}
-              >
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <span
-                    className={cn(
-                      "material-symbols-outlined text-[19px] transition-colors",
-                      isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400"
-                    )}
-                  >
-                    {item.icon}
-                  </span>
-                  <div className="truncate">
-                    <span className="text-[13px] font-medium block leading-tight">{item.label}</span>
-                  </div>
-                </div>
-                {item.badge && (
-                  <span
-                    className={cn(
-                      "text-[9px] font-mono font-bold px-1.5 py-0.5 rounded tracking-wider border",
-                      isActive(item.href)
-                        ? "bg-sky-500/20 text-sky-300 border-sky-500/40"
-                        : "bg-surface-2 text-text-muted border-border/40 group-hover:text-sky-400 group-hover:border-sky-500/30"
-                    )}
-                  >
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            ))}
-          </div>
-
+        <nav className="flex-1 px-3 py-4 space-y-5 overflow-y-auto custom-scrollbar">
           {/* Section: Router & Gateway */}
           <div className="space-y-1">
-            <p className="px-3 text-[11px] font-mono font-bold text-text-muted/70 tracking-wider uppercase flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-[#FF4D4D] shadow-[0_0_6px_rgba(255,77,77,0.6)]" />
+            <p className="px-3 text-[11px] font-mono font-bold text-sky-500 dark:text-sky-400 tracking-wider uppercase flex items-center gap-2 mb-2">
+              <span className="size-1.5 rounded-full bg-sky-500 dark:bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.7)]" />
               <span>Router Gateway</span>
             </p>
             {gatewayItems.map((item) => (
@@ -206,16 +138,16 @@ export default function Sidebar({ onClose }) {
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-all group border border-transparent",
+                  "flex items-center gap-3 px-3 py-2 rounded-lg transition-all group border border-transparent",
                   isActive(item.href)
-                    ? "bg-sky-500/10 text-white font-semibold shadow-[inset_0_0_12px_rgba(56,189,248,0.12)] border-l-2 border-l-sky-400"
-                    : "text-text-muted hover:bg-surface-2 hover:text-white"
+                    ? "bg-sky-500/10 text-sky-600 dark:text-sky-400 font-semibold shadow-[inset_0_0_12px_rgba(56,189,248,0.12)] border-l-2 border-l-sky-500 dark:border-l-sky-400"
+                    : "text-text-muted hover:bg-surface-2 hover:text-text-main"
                 )}
               >
                 <span
                   className={cn(
-                    "material-symbols-outlined text-[18px] transition-colors",
-                    isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400"
+                    "material-symbols-outlined text-[19px] transition-colors",
+                    isActive(item.href) ? "text-sky-600 dark:text-sky-400 fill-1" : "group-hover:text-sky-500 dark:group-hover:text-sky-400"
                   )}
                 >
                   {item.icon}
@@ -226,8 +158,8 @@ export default function Sidebar({ onClose }) {
           </div>
 
           {/* Section: System & Preferences */}
-          <div className="space-y-1 pt-1 border-t border-border/20">
-            <p className="px-3 text-[11px] font-mono font-bold text-text-muted/60 tracking-wider uppercase">
+          <div className="space-y-1 pt-2 border-t border-border/20">
+            <p className="px-3 text-[11px] font-mono font-bold text-text-muted/60 tracking-wider uppercase mb-2">
               System
             </p>
             {systemItems.map((item) => (
@@ -236,16 +168,16 @@ export default function Sidebar({ onClose }) {
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-all group border border-transparent",
+                  "flex items-center gap-3 px-3 py-2 rounded-lg transition-all group border border-transparent",
                   isActive(item.href)
-                    ? "bg-sky-500/10 text-white font-semibold border-l-2 border-l-sky-400"
-                    : "text-text-muted hover:bg-surface-2 hover:text-white"
+                    ? "bg-sky-500/10 text-sky-600 dark:text-sky-400 font-semibold border-l-2 border-l-sky-500 dark:border-l-sky-400 shadow-[inset_0_0_12px_rgba(56,189,248,0.12)]"
+                    : "text-text-muted hover:bg-surface-2 hover:text-text-main"
                 )}
               >
                 <span
                   className={cn(
-                    "material-symbols-outlined text-[18px] transition-colors",
-                    isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400"
+                    "material-symbols-outlined text-[19px] transition-colors",
+                    isActive(item.href) ? "text-sky-600 dark:text-sky-400 fill-1" : "group-hover:text-sky-500 dark:group-hover:text-sky-400"
                   )}
                 >
                   {item.icon}
@@ -259,14 +191,14 @@ export default function Sidebar({ onClose }) {
         {/* Footer Gateway Info */}
         <div className="p-3 mx-3 mb-3 rounded-lg border border-border/40 bg-surface-1/60 text-[11px]">
           <div className="flex items-center justify-between text-text-muted mb-1">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-sky-400 font-bold">Fast-Router v0.1</span>
-            <span className="flex items-center gap-1 text-[10px] text-emerald-400">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-sky-500 dark:text-sky-400 font-bold">Fast-Router v0.1</span>
+            <span className="flex items-center gap-1 text-[10px] text-emerald-500 dark:text-emerald-400 font-semibold">
+              <span className="size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
               ONLINE
             </span>
           </div>
           <p className="text-[11px] text-text-muted/80 leading-tight">
-            High-throughput production gateway for heavy LLM models.
+            High-throughput production gateway for upstream LLM providers.
           </p>
         </div>
       </aside>
