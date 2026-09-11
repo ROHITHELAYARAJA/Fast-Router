@@ -11,6 +11,7 @@ import { useCopyToClipboard } from "@/shared/hooks/useCopyToClipboard";
 import Button from "./Button";
 import { ConfirmModal } from "./Modal";
 import NineRemotePromoModal from "./NineRemotePromoModal";
+import FastRouterLogo from "./FastRouterLogo";
 
 // const VISIBLE_MEDIA_KINDS = ["embedding", "image", "imageToText", "tts", "stt", "webSearch", "webFetch", "video", "music"];
 const VISIBLE_MEDIA_KINDS = ["embedding", "image", "video", "tts", "stt"];
@@ -125,17 +126,9 @@ export default function Sidebar({ onClose }) {
         </div>
 
         {/* Logo */}
-        <div className="px-6 py-4 flex flex-col gap-2">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="flex items-center justify-center size-9 rounded-[10px] bg-gradient-to-br from-brand-500 to-brand-700 shadow-[var(--shadow-warm)]">
-              <span className="material-symbols-outlined text-white text-[20px]">hub</span>
-            </div>
-            <div className="flex flex-col">
-              <h1 className="text-lg font-semibold tracking-tight text-text-main">
-                {APP_CONFIG.name}
-              </h1>
-              <span className="text-xs text-text-muted">v{APP_CONFIG.version}</span>
-            </div>
+        <div className="px-5 py-4 flex flex-col gap-2 border-b border-border/40">
+          <Link href="/dashboard" className="transition-transform hover:scale-[1.02]">
+            <FastRouterLogo size="md" />
           </Link>
           {updateInfo && (
             <div className="flex flex-col gap-1.5 rounded p-1 -m-1">
@@ -171,16 +164,16 @@ export default function Sidebar({ onClose }) {
               href={item.href}
               onClick={onClose}
               className={cn(
-                "flex items-center gap-3 px-3 py-1 rounded-lg transition-all group",
+                "flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all group",
                 isActive(item.href)
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-sky-500/10 text-sky-400 font-semibold shadow-[inset_0_0_12px_rgba(56,189,248,0.12)] border-l-2 border-sky-400"
                   : "text-text-muted hover:bg-surface-2 hover:text-text-main"
               )}
             >
               <span
                 className={cn(
                   "material-symbols-outlined text-[18px]",
-                  isActive(item.href) ? "fill-1" : "group-hover:text-primary transition-colors"
+                  isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400 transition-colors"
                 )}
               >
                 {item.icon}
@@ -191,9 +184,10 @@ export default function Sidebar({ onClose }) {
 
           {/* AI Runtime section */}
           <div className="pt-3 mt-2 space-y-0.5">
-            <p className="px-4 text-xs font-semibold text-brand-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[15px]">psychology</span>
-              AI Runtime
+            <p className="px-4 text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <span className="size-2 rounded-full bg-[#FF4D4D] shadow-[0_0_8px_rgba(255,77,77,0.7)]" />
+              <span>AI Runtime</span>
+              <span className="text-[9px] font-mono font-bold bg-[#FF4D4D]/15 text-[#FF4D4D] px-1.5 py-0.2 rounded border border-[#FF4D4D]/30">V.02</span>
             </p>
             {runtimeItems.map((item) => (
               <Link
@@ -201,16 +195,16 @@ export default function Sidebar({ onClose }) {
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-1 rounded-lg transition-all group",
+                  "flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all group",
                   pathname === item.href
-                    ? "bg-brand-500/15 text-brand-500 font-semibold"
+                    ? "bg-sky-500/15 text-sky-400 font-semibold border-l-2 border-sky-400 shadow-[inset_0_0_12px_rgba(56,189,248,0.15)]"
                     : "text-text-muted hover:bg-surface-2 hover:text-text-main"
                 )}
               >
                 <span
                   className={cn(
                     "material-symbols-outlined text-[18px]",
-                    pathname === item.href ? "text-brand-500" : "group-hover:text-brand-500 transition-colors"
+                    pathname === item.href ? "text-sky-400" : "group-hover:text-sky-400 transition-colors"
                   )}
                 >
                   {item.icon}

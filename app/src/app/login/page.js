@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import FastRouterLogo from "@/shared/components/FastRouterLogo";
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
@@ -140,11 +141,11 @@ export default function LoginPage() {
 
   if (hasPassword === null) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090D16] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#09090B] text-white">
         <div className="flex flex-col items-center gap-3">
-          <div className="size-10 rounded-full border-2 border-blue-500/30 border-t-blue-500 animate-spin" />
+          <div className="size-10 rounded-full border-2 border-sky-400/30 border-t-sky-400 animate-spin" />
           <p className="text-xs font-mono tracking-widest text-slate-400 uppercase">
-            Initializing Fast-Router...
+            INITIALIZING FAST-ROUTER GATEWAY...
           </p>
         </div>
       </div>
@@ -152,54 +153,51 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#090D16] px-4 py-12 relative overflow-hidden font-sans select-none">
-      {/* Dynamic Background Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-cyan-600/10 rounded-full blur-[100px] pointer-events-none" />
+    <div className="min-h-screen flex items-center justify-center bg-[#09090B] text-white px-4 py-12 relative overflow-hidden font-sans select-none">
+      {/* High-Contrast Dual Accents: Sky-Blue & Light-Red Ambiance */}
+      <div className="absolute top-10 left-1/4 w-[500px] h-[500px] bg-sky-500/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-[500px] h-[500px] bg-[#FF4D4D]/15 rounded-full blur-[140px] pointer-events-none" />
 
-      {/* Cyber Grid Background */}
-      <div 
-        className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" 
-        aria-hidden="true" 
+      {/* Industrial Tech Grid Lines */}
+      <div
+        className="absolute inset-0 bg-[linear-gradient(to_right,#27272a1a_1px,transparent_1px),linear-gradient(to_bottom,#27272a1a_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none"
+        aria-hidden="true"
       />
 
       <div className="relative z-10 w-full max-w-md">
-        {/* Brand Header */}
+        {/* Brand Geometric Display Header */}
         <div className="text-center mb-8 flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono uppercase tracking-wider mb-4 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
-            <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-            Gateway Status: Active
+          {/* Status Indicator */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono mb-6 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+            <span className="size-2 rounded-full bg-sky-400 animate-pulse" />
+            <span className="text-slate-300 font-semibold tracking-wider uppercase">CORE GATEWAY</span>
+            <span className="text-slate-600">//</span>
+            <span className="text-[#FF4D4D] font-bold">ONLINE</span>
           </div>
 
-          <div className="size-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-400 p-[1px] shadow-[0_0_30px_rgba(37,99,235,0.4)] mb-4">
-            <div className="w-full h-full bg-[#0F172A] rounded-2xl flex items-center justify-center">
-              <span className="material-symbols-outlined text-blue-400 text-[32px]">
-                router
-              </span>
-            </div>
+          {/* Logo with Boxy Geometric Display Typography (BIGSTAGE & MONTECH inspired) */}
+          <div className="mb-3">
+            <FastRouterLogo size="lg" showSubtitle={false} />
           </div>
 
-          <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">
-            Fast<span className="text-blue-500">-Router</span>
-          </h1>
-          <p className="text-sm text-slate-400 font-normal max-w-xs">
-            High-Performance AI Proxy & Stateful Inference Gateway
+          <p className="text-xs font-mono text-slate-400 uppercase tracking-widest mt-1">
+            STATEFUL AI RUNTIME // LOAD BALANCER // V.02
           </p>
         </div>
 
-        {/* Main Card */}
-        <div className="rounded-2xl border border-slate-800 bg-[#0F172A]/85 backdrop-blur-xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden">
-          {/* Subtle top highlight line */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+        {/* Architectural Card */}
+        <div className="rounded-xl border border-slate-800 bg-[#121216]/90 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden">
+          {/* Top highlight bar in Sky-Blue to Light-Red gradient */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-sky-400 via-white to-[#FF4D4D]" />
 
           {mustChange ? (
             <form onSubmit={handleSetNewPassword} className="flex flex-col gap-4">
-              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs leading-relaxed">
-                Security notice: set a strong replacement password before accessing Fast-Router remotely.
+              <div className="p-3 rounded-lg bg-[#FF4D4D]/10 border border-[#FF4D4D]/30 text-[#FF4D4D] text-xs leading-relaxed font-mono">
+                SECURITY PROTOCOL: Define a new master password before remote gateway access.
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-                  New Password
+                <label className="text-xs font-mono uppercase tracking-wider text-slate-300">
+                  New Gateway Password
                 </label>
                 <input
                   type="password"
@@ -208,16 +206,16 @@ export default function LoginPage() {
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
                   autoFocus
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all text-sm font-mono"
+                  className="w-full px-4 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-400/20 transition-all text-sm font-mono"
                 />
-                {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+                {error && <p className="text-xs text-[#FF4D4D] mt-1 font-mono">{error}</p>}
               </div>
               <button
                 type="submit"
                 disabled={!newPassword || loading}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold text-sm shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all cursor-pointer disabled:opacity-50"
+                className="w-full py-3 px-4 rounded-lg bg-[#FF4D4D] hover:bg-[#ef4444] text-white font-bold text-sm shadow-[0_0_20px_rgba(255,77,77,0.35)] transition-all cursor-pointer disabled:opacity-50 font-display uppercase tracking-wider"
               >
-                {loading ? "Updating Credentials..." : "Set Password & Continue"}
+                {loading ? "UPDATING..." : "CONFIRM NEW CREDENTIAL"}
               </button>
             </form>
           ) : (
@@ -226,9 +224,9 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={handleSamlLogin}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer font-mono"
                 >
-                  <span className="material-symbols-outlined text-blue-400 text-[18px]">verified_user</span>
+                  <span className="material-symbols-outlined text-sky-400 text-[18px]">verified_user</span>
                   {samlLoginLabel}
                 </button>
               )}
@@ -237,9 +235,9 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={handleOidcLogin}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  className="w-full py-2.5 px-4 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer font-mono"
                 >
-                  <span className="material-symbols-outlined text-blue-400 text-[18px]">badge</span>
+                  <span className="material-symbols-outlined text-sky-400 text-[18px]">badge</span>
                   {oidcLoginLabel}
                 </button>
               )}
@@ -247,24 +245,24 @@ export default function LoginPage() {
               {ssoAvailable && passwordAvailable && (
                 <div className="flex items-center gap-3 my-1">
                   <div className="flex-1 h-[1px] bg-slate-800" />
-                  <span className="text-[11px] font-mono text-slate-500 uppercase">or sign in with key</span>
+                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">OR ACCESS VIA KEY</span>
                   <div className="flex-1 h-[1px] bg-slate-800" />
                 </div>
               )}
 
               {passwordAvailable && (
                 <form onSubmit={handleLogin} className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-                        Gateway Access Key
+                      <label className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold">
+                        ACCESS KEY // PASSWORD
                       </label>
                       <button
                         type="button"
                         onClick={handleQuickFill}
-                        className="text-[11px] font-mono text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
+                        className="text-[11px] font-mono font-bold text-sky-400 hover:text-sky-300 transition-colors cursor-pointer bg-sky-400/10 px-2 py-0.5 rounded border border-sky-400/20"
                       >
-                        [Quick Fill: 123456]
+                        FILL: 123456
                       </button>
                     </div>
 
@@ -277,12 +275,12 @@ export default function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         autoFocus
-                        className="w-full pl-4 pr-11 py-3 rounded-xl bg-slate-900/90 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25 transition-all text-sm font-mono tracking-wider"
+                        className="w-full pl-4 pr-11 py-3 rounded-lg bg-black/60 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-400/20 transition-all text-sm font-mono tracking-widest"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors p-1"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors p-1"
                         title={showPassword ? "Hide password" : "Show password"}
                       >
                         <span className="material-symbols-outlined text-[18px]">
@@ -292,8 +290,8 @@ export default function LoginPage() {
                     </div>
 
                     {error && (
-                      <div className="p-2.5 mt-1 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center gap-2 text-xs text-red-400 animate-shake">
-                        <span className="material-symbols-outlined text-[16px] text-red-400">error</span>
+                      <div className="p-2.5 mt-1 rounded-lg bg-[#FF4D4D]/10 border border-[#FF4D4D]/30 flex items-center gap-2 text-xs text-[#FF4D4D] font-mono">
+                        <span className="material-symbols-outlined text-[16px]">error</span>
                         <span>{error}</span>
                       </div>
                     )}
@@ -305,39 +303,43 @@ export default function LoginPage() {
                     )}
 
                     {resetHint && (
-                      <p className="text-xs text-slate-400 mt-1">
-                        Reset via CLI: <code className="text-blue-300 bg-slate-900 px-1 py-0.5 rounded">node app/cli/cli.js</code> → Settings → Reset Password.
+                      <p className="text-xs text-slate-400 mt-1 font-mono">
+                        Forgot key? Run <code className="text-sky-300 bg-slate-900 px-1 py-0.5 rounded">node app/cli/cli.js</code> → Settings → Reset Password.
                       </p>
                     )}
                   </div>
 
+                  {/* Primary Submit Button: High-Impact Boxy Display Design */}
                   <button
                     id="login-btn"
                     type="submit"
                     disabled={loading || retryAfter > 0 || !password}
-                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(37,99,235,0.35)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 px-4 rounded-lg bg-sky-400 hover:bg-sky-300 text-slate-950 font-black text-sm shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_30px_rgba(56,189,248,0.5)] transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 font-display uppercase tracking-wider"
+                    style={{
+                      fontFamily: "'Chakra Petch', 'Space Grotesk', system-ui, sans-serif"
+                    }}
                   >
                     {loading ? (
                       <>
-                        <div className="size-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                        <span>Verifying Credentials...</span>
+                        <div className="size-4 rounded-full border-2 border-slate-950/30 border-t-slate-950 animate-spin" />
+                        <span>AUTHENTICATING...</span>
                       </>
                     ) : retryAfter > 0 ? (
-                      <span>Wait {retryAfter}s</span>
+                      <span>WAIT {retryAfter}s</span>
                     ) : (
                       <>
-                        <span>Enter Gateway</span>
-                        <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                        <span>ENTER GATEWAY</span>
+                        <span className="font-bold text-base">&gt;</span>
                       </>
                     )}
                   </button>
 
-                  <div className="flex items-center justify-center gap-2 pt-2 border-t border-slate-800/80">
-                    <span className="text-xs text-slate-500">Default Credentials:</span>
+                  <div className="flex items-center justify-center gap-2 pt-2 border-t border-slate-800/60">
+                    <span className="text-[11px] font-mono text-slate-500">DEFAULT KEY:</span>
                     <button
                       type="button"
                       onClick={handleQuickFill}
-                      className="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20 hover:bg-blue-500/20 transition-colors cursor-pointer"
+                      className="text-[11px] font-mono font-bold text-sky-400 bg-sky-400/10 px-2 py-0.5 rounded border border-sky-400/20 hover:bg-sky-400/20 transition-colors cursor-pointer"
                     >
                       123456
                     </button>
@@ -348,16 +350,18 @@ export default function LoginPage() {
           )}
         </div>
 
-        {/* Footer */}
-        <div className="mt-8 text-center text-xs text-slate-500 flex flex-col items-center gap-1">
-          <p>© 2026 Fast-Router Systems. All rights reserved.</p>
-          <div className="flex items-center gap-3 text-slate-400">
-            <span>v0.1.0</span>
-            <span>•</span>
-            <span>Zero-Config AI Gateway</span>
-            <span>•</span>
-            <span>Local & Secure</span>
+        {/* Technical Brutalist Footer */}
+        <div className="mt-8 text-center text-xs font-mono text-slate-500 flex flex-col items-center gap-1.5">
+          <div className="flex items-center gap-2 text-slate-400">
+            <span className="text-white font-bold">FAST-ROUTER</span>
+            <span>//</span>
+            <span>NEURAL AI GATEWAY</span>
+            <span>//</span>
+            <span className="text-[#FF4D4D] font-bold">2026</span>
           </div>
+          <p className="text-[10px] text-slate-600 uppercase tracking-widest">
+            ALL RIGHTS RESERVED • RESILIENT INFERENCE PROXY
+          </p>
         </div>
       </div>
     </div>

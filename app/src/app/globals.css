@@ -7,113 +7,130 @@
 .material-symbols-outlined { opacity: 0; }
 .fonts-loaded .material-symbols-outlined { opacity: 1; transition: opacity .12s ease-out; }
 
+/* Boxy industrial display font inspired by BIGSTAGE & MONTECH */
+.font-display {
+  font-family: 'Chakra Petch', 'Space Grotesk', system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
 /* ============================================================
-   Fast-Router Brand Palette — Electric Blue & Obsidian
+   Fast-Router Brand Palette — Black & White with Sky-Blue & Light-Red
    Stateful AI Runtime & Intelligent Orchestration Platform
    ============================================================ */
 :root {
-  /* Brand scale (light) - centered on Electric Blue #2563EB */
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #2563EB;
-  --color-brand-600: #1D4ED8;
-  --color-brand-700: #1e40af;
-  --color-brand-800: #1e3a8a;
-  --color-brand-900: #172554;
+  /* Brand scale (light) - Sky Blue palette */
+  --color-brand-50: #f0f9ff;
+  --color-brand-100: #e0f2fe;
+  --color-brand-200: #bae6fd;
+  --color-brand-300: #7dd3fc;
+  --color-brand-400: #38bdf8;
+  --color-brand-500: #0ea5e9;
+  --color-brand-600: #0284c7;
+  --color-brand-700: #0369a1;
+  --color-brand-800: #075985;
+  --color-brand-900: #0c4a6e;
 
-  /* Primary */
-  --color-primary: var(--color-brand-500);
-  --color-primary-hover: var(--color-brand-600);
+  /* Primary (Sky Blue) */
+  --color-primary: #0284c7;
+  --color-primary-hover: #0369a1;
 
-  /* Surfaces & backgrounds (light) */
-  --color-bg: #F8FAFC;
-  --color-bg-alt: #F1F5F9;
-  --color-surface: #ffffff;
-  --color-surface-2: #f8fafc;
-  --color-surface-3: #f1f5f9;
-  --color-sidebar: rgba(248, 250, 252, 0.9);
+  /* Accent (Light Red / Coral) */
+  --color-accent-red: #ff4d4d;
+  --color-accent-red-hover: #ef4444;
+
+  /* Surfaces & backgrounds (light - Crisp White & Slate) */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F1F5F9;
+  --color-surface-3: #E2E8F0;
+  --color-sidebar: rgba(255, 255, 255, 0.95);
 
   /* Borders */
-  --color-border: #e2e8f0;
-  --color-border-subtle: #f1f5f9;
+  --color-border: #E2E8F0;
+  --color-border-subtle: #F1F5F9;
 
   /* Text */
-  --color-text: #0f172a;
-  --color-text-main: #0f172a;
-  --color-text-muted: #64748b;
-  --color-text-subtle: #94a3b8;
+  --color-text: #09090B;
+  --color-text-main: #09090B;
+  --color-text-muted: #64748B;
+  --color-text-subtle: #94A3B8;
 
   /* Status */
-  --color-danger: #ef4444;
+  --color-danger: #EF4444;
   --color-success: #10B981;
   --color-warning: #F59E0B;
-  --color-info: #06B6D4;
+  --color-info: #38BDF8;
 
   /* Radius */
-  --radius-brand: 10px;
-  --radius-brand-lg: 14px;
+  --radius-brand: 8px;
+  --radius-brand-lg: 12px;
 
   /* Shadows */
   --shadow-soft: 0 1px 3px 0 rgba(0,0,0,0.05);
-  --shadow-warm: 0 4px 14px -2px rgba(37, 99, 235, 0.15);
-  --shadow-elevated: 0 12px 28px -4px rgba(15, 23, 42, 0.08);
+  --shadow-warm: 0 4px 14px -2px rgba(14, 165, 233, 0.15);
+  --shadow-elevated: 0 12px 28px -4px rgba(9, 9, 11, 0.08);
   --shadow-elev:
     inset 0 1px 0 0 rgba(255,255,255,0.9),
-    0 1px 2px rgba(15,23,42,0.04),
-    0 12px 36px -8px rgba(15,23,42,0.08);
-  --shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    0 1px 2px rgba(9,9,11,0.04),
+    0 12px 36px -8px rgba(9,9,11,0.08);
+  --shadow-focus: 0 0 0 3px rgba(56, 189, 248, 0.25);
 
   color-scheme: light;
 }
 
 .dark {
-  /* Brand scale (dark) - Cyber Electric Blue #3B82F6 */
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3B82F6;
-  --color-brand-600: #2563EB;
-  --color-brand-700: #1D4ED8;
-  --color-brand-800: #1e3a8a;
-  --color-brand-900: #172554;
+  /* Brand scale (dark) - Cyber Sky Blue #38BDF8 */
+  --color-brand-50: #f0f9ff;
+  --color-brand-100: #e0f2fe;
+  --color-brand-200: #bae6fd;
+  --color-brand-300: #7dd3fc;
+  --color-brand-400: #38bdf8;
+  --color-brand-500: #38bdf8;
+  --color-brand-600: #0ea5e9;
+  --color-brand-700: #0284c7;
+  --color-brand-800: #0369a1;
+  --color-brand-900: #0c4a6e;
 
-  --color-primary: #3B82F6;
-  --color-primary-hover: #2563EB;
+  --color-primary: #38bdf8;
+  --color-primary-hover: #0ea5e9;
 
-  /* Surfaces (dark - Obsidian & Deep Navy) */
-  --color-bg: #090D16;
-  --color-bg-alt: #0D1322;
-  --color-surface: #0F172A;
-  --color-surface-2: #1E293B;
-  --color-surface-3: #334155;
-  --color-sidebar: rgba(15, 23, 42, 0.9);
+  /* Accent (Light Red / Coral) */
+  --color-accent-red: #ff4d4d;
+  --color-accent-red-hover: #ef4444;
 
-  --color-border: #1E293B;
-  --color-border-subtle: #1E293B80;
+  /* Surfaces (dark - Deep Black & Slate-900) */
+  --color-bg: #09090B;
+  --color-bg-alt: #121216;
+  --color-surface: #121216;
+  --color-surface-2: #18181B;
+  --color-surface-3: #27272A;
+  --color-sidebar: rgba(18, 18, 22, 0.95);
 
-  --color-text: #F8FAFC;
-  --color-text-main: #F8FAFC;
-  --color-text-muted: #94a3b8;
-  --color-text-subtle: #64748b;
+  --color-border: #27272A;
+  --color-border-subtle: rgba(39, 39, 42, 0.6);
 
-  --color-danger: #ef4444;
+  --color-text: #FAFAFA;
+  --color-text-main: #FFFFFF;
+  --color-text-muted: #A1A1AA;
+  --color-text-subtle: #71717A;
+
+  --color-danger: #ff4d4d;
   --color-success: #10B981;
   --color-warning: #F59E0B;
-  --color-info: #06B6D4;
+  --color-info: #38bdf8;
 
-  --shadow-soft: 0 1px 3px 0 rgba(0,0,0,0.4);
-  --shadow-warm: 0 4px 20px -2px rgba(37, 99, 235, 0.3);
-  --shadow-elevated: 0 12px 28px -4px rgba(0, 0, 0, 0.6);
+  --shadow-soft: 0 1px 3px 0 rgba(0,0,0,0.5);
+  --shadow-warm: 0 4px 20px -2px rgba(56, 189, 248, 0.25);
+  --shadow-elevated: 0 12px 28px -4px rgba(0, 0, 0, 0.7);
   --shadow-elev:
-    inset 0 1px 0 0 rgba(255,255,255,0.08),
-    0 1px 2px rgba(0,0,0,0.5),
-    0 16px 48px -8px rgba(0,0,0,0.7);
-  --shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.35);
+    inset 0 1px 0 0 rgba(255,255,255,0.06),
+    0 1px 2px rgba(0,0,0,0.6),
+    0 16px 48px -8px rgba(0,0,0,0.8);
+  --shadow-focus: 0 0 0 3px rgba(56, 189, 248, 0.35);
 
   color-scheme: dark;
 }
