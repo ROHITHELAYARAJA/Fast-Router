@@ -5,93 +5,86 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/shared/utils/cn";
-import { APP_CONFIG, UPDATER_CONFIG } from "@/shared/constants/config";
-import { MEDIA_PROVIDER_KINDS } from "@/shared/constants/providers";
+import { UPDATER_CONFIG } from "@/shared/constants/config";
 import { useCopyToClipboard } from "@/shared/hooks/useCopyToClipboard";
 import Button from "./Button";
 import { ConfirmModal } from "./Modal";
-import NineRemotePromoModal from "./NineRemotePromoModal";
 import FastRouterLogo from "./FastRouterLogo";
 
-// const VISIBLE_MEDIA_KINDS = ["embedding", "image", "imageToText", "tts", "stt", "webSearch", "webFetch", "video", "music"];
-const VISIBLE_MEDIA_KINDS = ["embedding", "image", "video", "tts", "stt"];
-// Combined entry: webSearch + webFetch share one page at /dashboard/media-providers/web
-const COMBINED_WEB_ITEM = { id: "web", label: "Web Fetch & Search", icon: "travel_explore", href: "/dashboard/media-providers/web" };
+// Primary Workspace navigation (Core products)
+const coreItems = [
+  {
+    href: "/dashboard/chat",
+    label: "AI Chat",
+    icon: "chat",
+    badge: "HEAVY",
+    description: "Production reasoning chat",
+  },
+  {
+    href: "/dashboard/apps",
+    label: "App Builder",
+    icon: "apps",
+    badge: "STUDIO",
+    description: "Build & export AI apps",
+  },
+];
 
-const navItems = [
+// Infrastructure & Gateway navigation
+const gatewayItems = [
   { href: "/dashboard/endpoint", label: "Endpoint & Key", icon: "api" },
   { href: "/dashboard/providers", label: "Providers", icon: "dns" },
-  // { href: "/dashboard/basic-chat", label: "Basic Chat", icon: "chat" }, // Hidden
-  { href: "/dashboard/combos", label: "Combo & Vision Adapter", icon: "layers" },
-  { href: "/dashboard/usage", label: "Usage", icon: "bar_chart" },
+  { href: "/dashboard/combos", label: "Routing & Combos", icon: "layers" },
+  { href: "/dashboard/usage", label: "Usage & Metrics", icon: "bar_chart" },
   { href: "/dashboard/quota", label: "Quota Tracker", icon: "data_usage" },
-  { href: "/dashboard/token-saver", label: "Token Saver", icon: "savings" },
-  // { href: "/dashboard/pxpipe", label: "PXPIPE", icon: "image" },
-  { href: "/dashboard/cli-tools", label: "CLI Tools", icon: "terminal" },
 ];
 
-const runtimeItems = [
-  { href: "/dashboard/runtime", label: "Runtime Playground", icon: "psychology" },
-  { href: "/dashboard/runtime/sessions", label: "Sessions & Memory", icon: "memory" },
-  { href: "/dashboard/runtime/checkpoints", label: "Checkpoints & Handoff", icon: "restore" },
-  { href: "/dashboard/runtime/audit", label: "Audit & Telemetry", icon: "verified_user" },
-];
-
-const debugItems = [
-  { href: "/dashboard/console-log", label: "Console Log", icon: "terminal" },
-  { href: "/dashboard/translator", label: "Translator", icon: "translate" },
-];
-
+// System & Preferences
 const systemItems = [
-  { href: "/dashboard/proxy-pools", label: "Proxy Pools", icon: "lan" },
-  { href: "/dashboard/skills", label: "Skills", icon: "extension" },
+  { href: "/dashboard/profile", label: "Settings", icon: "settings" },
 ];
 
 export default function Sidebar({ onClose }) {
   const pathname = usePathname();
-  const [mediaOpen, setMediaOpen] = useState(false);
-  const [showRemoteModal, setShowRemoteModal] = useState(false);
   const [isDisconnected, setIsDisconnected] = useState(false);
   const [updateInfo, setUpdateInfo] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [shutdownCountdown, setShutdownCountdown] = useState(0);
-  const [enableTranslator, setEnableTranslator] = useState(false);
   const { copied, copy } = useCopyToClipboard(2000);
 
   const INSTALL_CMD = UPDATER_CONFIG.installCmdLatest;
 
-  useEffect(() => {
-    fetch("/api/settings")
-      .then(res => res.json())
-      .then(data => { if (data.enableTranslator) setEnableTranslator(true); })
-      .catch(() => {});
-  }, []);
-
   // Lazy check for new npm version on mount
   useEffect(() => {
     fetch("/api/version")
-      .then(res => res.json())
-      .then(data => { if (data.hasUpdate) setUpdateInfo(data); })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.hasUpdate) setUpdateInfo(data);
+      })
       .catch(() => {});
   }, []);
 
   const isActive = (href) => {
     if (href === "/dashboard/endpoint") {
-      return pathname === "/dashboard" || pathname.startsWith("/dashboard/endpoint");
+      return pathname === "/dashboard/endpoint";
+    }
+    if (href === "/dashboard/chat") {
+      return pathname === "/dashboard" || pathname.startsWith("/dashboard/chat");
     }
     return pathname.startsWith(href);
   };
 
-  // Open manual update panel (no countdown yet — user must click Copy to trigger shutdown)
   const handleUpdate = () => {
     setShowUpdateModal(false);
     setIsUpdating(true);
   };
 
-  // Triggered by Copy button inside ManualUpdatePanel: copy + countdown + shutdown
   const handleCopyAndShutdown = async () => {
-    try { await navigator.clipboard.writeText(INSTALL_CMD); } catch { /* clipboard blocked */ }
+    try {
+      await navigator.clipboard.writeText(INSTALL_CMD);
+    } catch {
+      /* clipboard blocked */
+    }
     copy(INSTALL_CMD);
     let remaining = UPDATER_CONFIG.shutdownCountdownSec;
     setShutdownCountdown(remaining);
@@ -111,13 +104,9 @@ export default function Sidebar({ onClose }) {
     setShutdownCountdown(0);
   };
 
-  // Note: legacy updater poll removed. New flow: copy install cmd + shutdown server,
-  // user runs the command manually in another terminal.
-
-
   return (
     <>
-      <aside className="flex w-72 flex-col border-r border-border-subtle bg-vibrancy backdrop-blur-xl transition-colors duration-300 min-h-full">
+      <aside className="flex w-72 flex-col border-r border-border-subtle bg-vibrancy backdrop-blur-xl transition-colors duration-300 min-h-full select-none">
         {/* Traffic lights */}
         <div className="flex items-center gap-2 px-6 pt-5 pb-2">
           <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
@@ -157,54 +146,76 @@ export default function Sidebar({ onClose }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 py-2 space-y-0.5 overflow-y-auto custom-scrollbar">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={onClose}
-              className={cn(
-                "flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all group",
-                isActive(item.href)
-                  ? "bg-sky-500/10 text-sky-400 font-semibold shadow-[inset_0_0_12px_rgba(56,189,248,0.12)] border-l-2 border-sky-400"
-                  : "text-text-muted hover:bg-surface-2 hover:text-text-main"
-              )}
-            >
-              <span
-                className={cn(
-                  "material-symbols-outlined text-[18px]",
-                  isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400 transition-colors"
-                )}
-              >
-                {item.icon}
-              </span>
-              <span className="text-[13px] font-medium">{item.label}</span>
-            </Link>
-          ))}
-
-          {/* AI Runtime section */}
-          <div className="pt-3 mt-2 space-y-0.5">
-            <p className="px-4 text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-              <span className="size-2 rounded-full bg-[#FF4D4D] shadow-[0_0_8px_rgba(255,77,77,0.7)]" />
-              <span>AI Runtime</span>
-              <span className="text-[9px] font-mono font-bold bg-[#FF4D4D]/15 text-[#FF4D4D] px-1.5 py-0.2 rounded border border-[#FF4D4D]/30">V.02</span>
+        <nav className="flex-1 px-3 py-3 space-y-5 overflow-y-auto custom-scrollbar">
+          {/* Section: Core Workspace */}
+          <div className="space-y-1">
+            <p className="px-3 text-[11px] font-mono font-bold text-sky-400 tracking-wider uppercase flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
+              <span>Workspace</span>
             </p>
-            {runtimeItems.map((item) => (
+            {coreItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all group",
-                  pathname === item.href
-                    ? "bg-sky-500/15 text-sky-400 font-semibold border-l-2 border-sky-400 shadow-[inset_0_0_12px_rgba(56,189,248,0.15)]"
-                    : "text-text-muted hover:bg-surface-2 hover:text-text-main"
+                  "flex items-center justify-between px-3 py-2 rounded-lg transition-all group border border-transparent",
+                  isActive(item.href)
+                    ? "bg-sky-500/10 text-white font-semibold shadow-[inset_0_0_12px_rgba(56,189,248,0.15)] border-sky-500/30 border-l-2 border-l-sky-400"
+                    : "text-text-muted hover:bg-surface-2 hover:text-white"
+                )}
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span
+                    className={cn(
+                      "material-symbols-outlined text-[19px] transition-colors",
+                      isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400"
+                    )}
+                  >
+                    {item.icon}
+                  </span>
+                  <div className="truncate">
+                    <span className="text-[13px] font-medium block leading-tight">{item.label}</span>
+                  </div>
+                </div>
+                {item.badge && (
+                  <span
+                    className={cn(
+                      "text-[9px] font-mono font-bold px-1.5 py-0.5 rounded tracking-wider border",
+                      isActive(item.href)
+                        ? "bg-sky-500/20 text-sky-300 border-sky-500/40"
+                        : "bg-surface-2 text-text-muted border-border/40 group-hover:text-sky-400 group-hover:border-sky-500/30"
+                    )}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
+            ))}
+          </div>
+
+          {/* Section: Router & Gateway */}
+          <div className="space-y-1">
+            <p className="px-3 text-[11px] font-mono font-bold text-text-muted/70 tracking-wider uppercase flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-[#FF4D4D] shadow-[0_0_6px_rgba(255,77,77,0.6)]" />
+              <span>Router Gateway</span>
+            </p>
+            {gatewayItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onClose}
+                className={cn(
+                  "flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-all group border border-transparent",
+                  isActive(item.href)
+                    ? "bg-sky-500/10 text-white font-semibold shadow-[inset_0_0_12px_rgba(56,189,248,0.12)] border-l-2 border-l-sky-400"
+                    : "text-text-muted hover:bg-surface-2 hover:text-white"
                 )}
               >
                 <span
                   className={cn(
-                    "material-symbols-outlined text-[18px]",
-                    pathname === item.href ? "text-sky-400" : "group-hover:text-sky-400 transition-colors"
+                    "material-symbols-outlined text-[18px] transition-colors",
+                    isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400"
                   )}
                 >
                   {item.icon}
@@ -214,79 +225,27 @@ export default function Sidebar({ onClose }) {
             ))}
           </div>
 
-          {/* System section */}
-          <div className="pt-3 mt-2 space-y-0.5">
-            <p className="px-4 text-xs font-semibold text-text-muted/60 uppercase tracking-wider mb-2">
+          {/* Section: System & Preferences */}
+          <div className="space-y-1 pt-1 border-t border-border/20">
+            <p className="px-3 text-[11px] font-mono font-bold text-text-muted/60 tracking-wider uppercase">
               System
             </p>
-
-            {/* Media Providers accordion */}
-            <button
-              onClick={() => setMediaOpen((v) => !v)}
-              className={cn(
-                "w-full flex items-center gap-3 px-3 py-1 rounded-lg transition-all group",
-                pathname.startsWith("/dashboard/media-providers")
-                  ? "bg-primary/10 text-primary"
-                  : "text-text-muted hover:bg-surface-2 hover:text-text-main"
-              )}
-            >
-              <span className="material-symbols-outlined text-[18px]">perm_media</span>
-              <span className="text-[13px] font-medium flex-1 text-left">Media Providers</span>
-              <span className="material-symbols-outlined text-[14px] transition-transform" style={{ transform: mediaOpen ? "rotate(180deg)" : "rotate(0deg)" }}>
-                expand_more
-              </span>
-            </button>
-            {mediaOpen && (
-              <div className="pl-4">
-                {MEDIA_PROVIDER_KINDS.filter((k) => VISIBLE_MEDIA_KINDS.includes(k.id)).map((kind) => (
-                  <Link
-                    key={kind.id}
-                    href={`/dashboard/media-providers/${kind.id}`}
-                    onClick={onClose}
-                    className={cn(
-                      "flex items-center gap-3 px-4 py-1 rounded-lg transition-all group",
-                      pathname.startsWith(`/dashboard/media-providers/${kind.id}`)
-                        ? "bg-primary/10 text-primary"
-                        : "text-text-muted hover:bg-surface-2 hover:text-text-main"
-                    )}
-                  >
-                    <span className="material-symbols-outlined text-[16px]">{kind.icon}</span>
-                    <span className="text-sm">{kind.label}</span>
-                  </Link>
-                ))}
-                <Link
-                  key={COMBINED_WEB_ITEM.id}
-                  href={COMBINED_WEB_ITEM.href}
-                  onClick={onClose}
-                  className={cn(
-                    "flex items-center gap-3 px-4 py-1 rounded-lg transition-all group",
-                    pathname.startsWith(COMBINED_WEB_ITEM.href)
-                      ? "bg-primary/10 text-primary"
-                      : "text-text-muted hover:bg-surface-2 hover:text-text-main"
-                  )}
-                >
-                  <span className="material-symbols-outlined text-[16px]">{COMBINED_WEB_ITEM.icon}</span>
-                  <span className="text-sm">{COMBINED_WEB_ITEM.label}</span>
-                </Link>
-              </div>
-            )}
-
             {systemItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-1 rounded-lg transition-all group",
+                  "flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-all group border border-transparent",
                   isActive(item.href)
-                    ? "bg-primary/10 text-primary"
-                    : "text-text-muted hover:bg-surface-2 hover:text-text-main"
+                    ? "bg-sky-500/10 text-white font-semibold border-l-2 border-l-sky-400"
+                    : "text-text-muted hover:bg-surface-2 hover:text-white"
                 )}
               >
                 <span
                   className={cn(
-                    "material-symbols-outlined text-[18px]",
-                    isActive(item.href) ? "fill-1" : "group-hover:text-primary transition-colors"
+                    "material-symbols-outlined text-[18px] transition-colors",
+                    isActive(item.href) ? "text-sky-400 fill-1" : "group-hover:text-sky-400"
                   )}
                 >
                   {item.icon}
@@ -294,94 +253,23 @@ export default function Sidebar({ onClose }) {
                 <span className="text-[13px] font-medium">{item.label}</span>
               </Link>
             ))}
-
-            {/* Debug items (inside System section, before Settings) */}
-            {debugItems.map((item) => {
-              const show = item.href !== "/dashboard/translator" || enableTranslator;
-              return show ? (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={onClose}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-1 rounded-lg transition-all group",
-                    isActive(item.href)
-                      ? "bg-primary/10 text-primary"
-                      : "text-text-muted hover:bg-surface-2 hover:text-text-main"
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "material-symbols-outlined text-[18px]",
-                      isActive(item.href) ? "fill-1" : "group-hover:text-primary transition-colors"
-                    )}
-                  >
-                    {item.icon}
-                  </span>
-                  <span className="text-[13px] font-medium">{item.label}</span>
-                </Link>
-              ) : null;
-            })}
-
-            {/* Remote */}
-            <button
-              onClick={() => setShowRemoteModal(true)}
-              className={cn(
-                "flex items-center gap-3 px-3 py-1 rounded-lg transition-all group w-full",
-                "text-text-muted hover:bg-surface-2 hover:text-text-main"
-              )}
-            >
-              <span className="material-symbols-outlined text-[18px] group-hover:text-primary transition-colors">
-                computer
-              </span>
-              <span className="text-[13px] font-medium">9Remote</span>
-            </button>
-
-            {/* 9English */}
-            <a
-              href="https://9english.net/"
-              target="_blank"
-              rel="noreferrer"
-              onClick={onClose}
-              className={cn(
-                "flex items-center gap-3 px-3 py-1 rounded-lg transition-all group w-full",
-                "text-text-muted hover:bg-surface-2 hover:text-text-main"
-              )}
-            >
-              <span className="material-symbols-outlined text-[18px] group-hover:text-primary transition-colors">
-                translate
-              </span>
-              <span className="text-[13px] font-medium">9English</span>
-            </a>
-
-            {/* Settings */}
-            <Link
-              href="/dashboard/profile"
-              onClick={onClose}
-              className={cn(
-                "flex items-center gap-3 px-3 py-1 rounded-lg transition-all group",
-                isActive("/dashboard/profile")
-                  ? "bg-primary/10 text-primary"
-                  : "text-text-muted hover:bg-surface-2 hover:text-text-main"
-              )}
-            >
-              <span
-                className={cn(
-                  "material-symbols-outlined text-[18px]",
-                  isActive("/dashboard/profile") ? "fill-1" : "group-hover:text-primary transition-colors"
-                )}
-              >
-                settings
-              </span>
-              <span className="text-[13px] font-medium">Settings</span>
-            </Link>
           </div>
         </nav>
 
+        {/* Footer Gateway Info */}
+        <div className="p-3 mx-3 mb-3 rounded-lg border border-border/40 bg-surface-1/60 text-[11px]">
+          <div className="flex items-center justify-between text-text-muted mb-1">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-sky-400 font-bold">Fast-Router v0.1</span>
+            <span className="flex items-center gap-1 text-[10px] text-emerald-400">
+              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              ONLINE
+            </span>
+          </div>
+          <p className="text-[11px] text-text-muted/80 leading-tight">
+            High-throughput production gateway for heavy LLM models.
+          </p>
+        </div>
       </aside>
-
-      {/* Remote Promo Modal */}
-      <NineRemotePromoModal isOpen={showRemoteModal} onClose={() => setShowRemoteModal(false)} />
 
       {/* Update Confirmation Modal */}
       <ConfirmModal
@@ -430,7 +318,15 @@ Sidebar.propTypes = {
   onClose: PropTypes.func,
 };
 
-function ManualUpdatePanel({ latestVersion, installCmd, copied, onCopyAndShutdown, onCancel, countdown, isDisconnected }) {
+function ManualUpdatePanel({
+  latestVersion,
+  installCmd,
+  copied,
+  onCopyAndShutdown,
+  onCancel,
+  countdown,
+  isDisconnected,
+}) {
   const isCountingDown = countdown > 0;
   return (
     <div className="w-full max-w-lg rounded-xl bg-neutral-900/95 border border-white/10 p-6 text-white">
@@ -439,7 +335,9 @@ function ManualUpdatePanel({ latestVersion, installCmd, copied, onCopyAndShutdow
           <span className="material-symbols-outlined text-[24px]">content_copy</span>
         </div>
         <div>
-          <h2 className="text-lg font-semibold">Update Fast-Router{latestVersion ? ` to v${latestVersion}` : ""}</h2>
+          <h2 className="text-lg font-semibold">
+            Update Fast-Router{latestVersion ? ` to v${latestVersion}` : ""}
+          </h2>
           <p className="text-xs text-white/60">
             {isDisconnected
               ? "Server stopped. Paste the command into a terminal to install."
@@ -456,9 +354,13 @@ function ManualUpdatePanel({ latestVersion, installCmd, copied, onCopyAndShutdow
       </div>
 
       <ol className="text-xs text-white/70 space-y-1 list-decimal list-inside mb-4">
-        <li>Click <strong>Copy & Shutdown</strong> below.</li>
+        <li>
+          Click <strong>Copy & Shutdown</strong> below.
+        </li>
         <li>Paste the command into your terminal and press Enter.</li>
-        <li>Run <code className="px-1 rounded bg-white/10 text-green-400">Fast-Router</code> again after install.</li>
+        <li>
+          Run <code className="px-1 rounded bg-white/10 text-green-400">Fast-Router</code> again after install.
+        </li>
       </ol>
 
       {isDisconnected ? (
@@ -470,8 +372,17 @@ function ManualUpdatePanel({ latestVersion, installCmd, copied, onCopyAndShutdow
           <Button variant="secondary" onClick={onCancel} disabled={isCountingDown}>
             Cancel
           </Button>
-          <Button variant="primary" fullWidth onClick={onCopyAndShutdown} disabled={isCountingDown}>
-            {copied ? "✓ Copied — shutting down..." : isCountingDown ? `Shutting down in ${countdown}s` : "Copy & Shutdown"}
+          <Button
+            variant="primary"
+            fullWidth
+            onClick={onCopyAndShutdown}
+            disabled={isCountingDown}
+          >
+            {copied
+              ? "✓ Copied — shutting down..."
+              : isCountingDown
+                ? `Shutting down in ${countdown}s`
+                : "Copy & Shutdown"}
           </Button>
         </div>
       )}
